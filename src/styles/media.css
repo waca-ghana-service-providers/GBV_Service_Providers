@@ -1,0 +1,977 @@
+/* Base styles for larger screens */
+@media screen and (min-width: 1200px) {
+    .nav-container {
+        max-width: 1400px;
+    }
+    
+    #stats-panel, #controls-panel {
+        padding: 30px;
+    }
+    
+    #chart-container {
+        height: 400px;
+    }
+    
+    .nav-logos {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-left: 0 !important; 
+        gap: 20px;
+    }
+    
+    .nav-items {
+        display: flex;
+        justify-content: flex-end;
+        gap: 30px;
+    }
+}
+
+/* For desktop: Create a grid layout with three columns */
+@media screen and (min-width: 992px) {
+    .panel-close-btn {
+        display: none;
+    }
+
+    #app-container {
+        display: grid;
+        grid-template-columns: 300px 1fr 340px;
+        grid-template-areas: "stats map controls";
+        height: 100vh;
+        width: 100%;
+        position: relative;
+    }
+    
+    #stats-panel {
+        grid-area: stats;
+        position: relative; 
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 140%; 
+        max-height: 100vh;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+    
+    #map {
+        grid-area: map; 
+        flex: none; /* Remove flex properties */
+        width: 100%;
+        height: 100%;
+    }
+    
+    #controls-panel {
+        grid-area: controls;
+        position: relative; 
+        right: 0;
+        height: 100vh;
+        width: 100%;
+        max-height: 100vh;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    }
+    
+    /* Adjust the map controls to avoid overlap with panels */
+    .leaflet-control-container .leaflet-left {
+        left: 200px; 
+    }
+    
+    .leaflet-control-container .leaflet-left {
+        right: 200px; 
+    }
+    
+    .leaflet-control-scale {
+        right: 2px;  
+        bottom: 10px;
+    
+    }
+    
+    /* Hide mobile header on desktop */
+    #mobile-header {
+        display: none;
+    }
+
+    /* Add more padding to the panel content to avoid text being too close to edges */
+    #stats-panel, #controls-panel {
+        padding: 25px;
+        overflow-y: auto;
+    }
+    
+    /* Ensure panel titles have proper spacing */
+    #stats-panel h3, #controls-panel h3 {
+        margin-top: 0;
+        margin-right: 30px; /* Give space for any potential UI elements */
+    }
+
+    /* Always show leaflet attribution on non-mobile */
+    .leaflet-control-attribution.leaflet-control {
+        display: none !important;
+        bottom: 5px;
+        right: 355px;
+        font-size: 10px;
+    }
+    
+    .nav-logos {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-left: 0 !important;
+        gap: 20px;
+    }
+    
+    .nav-text {
+        display: inline; /* Ensure text is visible on desktop */
+    }
+}
+
+/* Medium-sized desktops and laptops */
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+    #chart-container {
+        height: 320px;
+    }
+    
+    #stats-panel {
+        width: 100%; 
+    }
+    
+    /* Ensure logos are properly positioned */
+    .nav-logos {
+        margin-left: 0 !important;
+    }
+}
+
+/* Tablets and smaller laptops */
+@media screen and (max-width: 1024px) {
+    #stats-panel, #controls-panel {
+        position: relative;
+        width: 100%;
+        max-width: none;
+        margin: 10px 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    #chart-container {
+        height: 280px;
+    }
+    
+    /* Ensure navigation is fully visible */
+    .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 15px;
+    }
+    
+    .nav-logos {
+        margin-left: 0 !important;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+}
+
+/* Retain existing mobile styles for small screen sizes */
+@media screen and (max-width: 991px) {
+    /* Your current mobile panel behavior */
+    #app-container {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    #mobile-header {
+        display: flex;
+    }
+    
+    #stats-panel {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 290px;
+        transform: translateX(-100%);
+        z-index: 1001;
+        transition: transform 0.3s ease;
+    }
+    
+    #stats-panel.active {
+        transform: translateX(0);
+    }
+    
+    #controls-panel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 320px;
+        transform: translateX(100%);
+        z-index: 1001;
+        transition: transform 0.3s ease;
+    }
+    
+    #controls-panel.active {
+        transform: translateX(0);
+    }
+    
+    /* Show overlay when panels are active */
+    .panel-overlay {
+        display: block;
+    }
+    .panel-close-btn {
+        display: flex;
+    }
+
+    /* Add more padding to the panel content to avoid text being too close to edges */
+    #stats-panel, #controls-panel {
+        padding: 25px;
+        overflow-y: auto;
+    }
+    
+    /* Ensure panel titles have proper spacing */
+    #stats-panel h3, #controls-panel h3 {
+        margin-top: 0;
+        margin-right: 30px; 
+    }
+
+    .leaflet-control-container {
+        display: block !important;
+    }
+    
+    .leaflet-control-attribution.leaflet-control {
+        display: none !important;
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        font-size: 9px;
+    }
+    
+    /* Ensure navigation is visible */
+    .nav-logos {
+        margin-left: 0 !important;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+}
+
+/* iPad and similar tablets in portrait mode */
+@media screen and (min-width: 768px) and (max-width: 991px) and (orientation: portrait) {
+    #chart-container {
+        height: 320px;
+    }
+    
+    #stats-panel, #controls-panel {
+        width: 350px;
+    }
+    
+    #filter-controls {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .leaflet-control-container .leaflet-left {
+        left: 10px;
+        bottom: 190px;
+    }
+    
+    /* Ensure navigation elements are visible */
+    .nav-container {
+        padding: 0 15px;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .nav-logos {
+        margin-left: 0 !important;
+    }
+    
+    .nav-items {
+        gap: 20px;
+    }
+}
+
+
+/* Small tablets and large phones */
+@media screen and (max-width: 768px) {
+    #app-container {
+        height: auto;
+        min-height: 120vh;
+        padding-top: 50px; 
+        box-sizing: border-box; 
+        height: calc(100vh - 50px);
+        margin-top: 50px; 
+    }
+
+    #mobile-header {
+        position: fixed;
+        top: 50px; 
+        left: 0;
+        right: 0;
+        height: 50px;
+        z-index: 1001;
+    }
+    
+    #stats-panel, #controls-panel {
+        position: fixed;
+        width: 85%;
+        overflow-y: auto;
+        padding: 20px;
+        margin: 0;
+        z-index: 1001;
+        top: 120px; 
+        height: calc(100vh - 100px);
+    }
+    
+    #stats-panel {
+        left: 0;
+        transform: translateX(-100%);
+    }
+    
+    #controls-panel {
+        right: 0;
+        transform: translateX(100%);
+    }
+    
+    #stats-panel.active, #controls-panel.active {
+        transform: translateX(0);
+        z-index: 1003;
+    }
+    
+    .panel-overlay {
+        display: block;
+    }
+    
+    #map {
+        margin-top: 20px; 
+        height: calc(100vh - 50px) !important; 
+    }
+    
+    #chart-container {
+        height: 220px;
+    }
+    
+    #institution-count-value {
+        font-size: 50px;
+    }
+    
+    /* Ensure content doesn't overlap fixed header */
+    #controls-panel, #stats-panel {
+        padding-top: 60px; 
+        box-sizing: border-box;
+    }
+
+    .leaflet-control-container .leaflet-left {
+        left: 10px;
+        bottom: 350px; 
+    }
+
+    .leaflet-control-scale {
+        right: 2px;
+        left: 2px;
+        bottom: 353px;
+    }
+
+    .nav-container {
+        padding: 0 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .nav-items {
+        gap: 15px;
+        display: flex;
+        align-items: center;
+    }
+    
+    /* Make sure nav text is visible if there's space */
+    .nav-text {
+        display: inline-block;
+        font-size: 14px;
+    }
+    
+    .nav-link {
+        padding: 8px 10px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .nav-link i {
+        font-size: 1.3em;
+        margin-right: 5px;
+    }
+
+    .nav-logos {
+        margin-left: 0 !important; 
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    /* Make sure leaflet attribution is visible */
+    .leaflet-control-attribution.leaflet-control {
+        display: none !important;
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        font-size: 9px;
+    }
+}
+
+/* Landscape orientation for tablets */
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    #app-container {
+        height: calc(100vh - 50px);
+        margin-top: 50px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto 1fr;
+        grid-template-areas: 
+            "header header"
+            "map map";
+    }
+    
+    #mobile-header {
+        grid-area: header;
+    }
+    
+    #map {
+        grid-area: map;
+        height: 100% !important;
+    }
+    
+    #stats-panel, #controls-panel {
+        width: 50%;
+        height: 100vh;
+        top: 100px;
+    }
+    
+    #chart-container {
+        height: 250px;
+    }
+    
+    .filter-option label {
+        font-size: 14px;
+    }
+    
+    .leaflet-control-container .leaflet-left {
+        left: 10px;
+        top: 180px;
+    }
+
+
+    .nav-logos {
+        margin-left: 0 !important;
+        display: flex;
+        align-items: center;
+    }
+    
+    .nav-items {
+        display: flex;
+        gap: 20px;
+    }
+}
+
+/* Tablet-specific adjustments */
+@media screen and (min-width: 601px) and (max-width: 768px) {
+    #filter-controls {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+
+    .nav-logos {
+        margin-left: 0 !important;
+    }
+    
+    /* Ensure Home and GitHub icons are visible */
+    .nav-items {
+        display: flex;
+        gap: 15px;
+    }
+}
+
+/* Small phones */
+@media screen and (max-width: 600px) {
+    #filter-controls {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .filter-option label {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+    
+    .filter-option input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+    }
+    
+    #chart-container {
+        height: 200px;
+    }
+    
+
+    .nav-logos {
+        margin-left: 0 !important;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .nav-items {
+        display: flex;
+        gap: 10px;
+    }
+    
+    /* Hide text on very small screens, show only icons */
+    .nav-text {
+        display: none;
+    }
+    
+    .nav-link i {
+        font-size: 1.2em;
+    }
+}
+
+/* Landscape orientation for phones */
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    #app-container {
+        margin-top: 50px;
+        height: calc(100vh - 50px);
+    }
+    
+    #mobile-header {
+        top: 0;
+    }
+    
+    #stats-panel, #controls-panel {
+        width: 40%;
+        height: 100vh;
+        top: 50px;
+    }
+    
+    #chart-container {
+        height: 150px;
+    }
+    
+    #filter-controls {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    #institution-count {
+        padding: 15px 10px;
+    }
+    
+    #institution-count-value {
+        font-size: 40px;
+    }
+    
+
+    .nav-logos {
+        margin-left: 0 !important;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .nav-items {
+        display: flex;
+        gap: 15px;
+    }
+}
+
+/* Mobile phones */
+@media screen and (max-width: 480px) {
+    .nav-logos {
+        margin-left: 0 !important; /* Reset negative margin */
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .nav-items {
+        display: flex;
+        gap: 10px; 
+    }
+
+    #stats-panel, #controls-panel {
+        width: 100%;
+        padding: 15px;
+    }
+    
+    #filter-controls {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    
+    #chart-container {
+        height: 180px;
+    }
+    
+    #institution-count-value {
+        font-size: 42px;
+    }
+    
+    #institution-count h2 {
+        font-size: 16px;
+    }
+    
+    .search-wrapper {
+        margin-bottom: 10px;
+    }
+    
+    #search-input {
+        font-size: 16px; 
+    }
+    
+    /* Make sure panels don't overflow screen edges */
+    #controls-panel, #stats-panel {
+        padding-top: 50px;
+        padding-bottom: 20px;
+    }
+
+    #clear-route,
+    .get-directions {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    
+    #clear-route::before,
+    .get-directions::before {
+        width: 14px;
+        height: 14px;
+        margin-right: 6px;
+    }
+
+
+    .leaflet-control-container .leaflet-left {
+        left: 10px;
+        bottom: 200px;
+    }
+
+    .leaflet-control-scale {
+        left: 5px;
+        bottom: 204px;
+    }
+}
+
+
+/* Tiny phones */
+@media screen and (max-width: 360px) {
+    #filter-controls {
+        grid-template-columns: 1fr !important;
+    }
+    
+    #chart-container {
+        height: 160px;
+    }
+    
+    #institution-count-value {
+        font-size: 36px;
+    }
+    
+    #institution-count h2 {
+        font-size: 14px;
+    }
+    
+
+    .nav-logos {
+        margin-left: 0 !important;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .nav-items {
+        display: flex;
+        gap: 10px;
+    }
+    
+    /* Ensure navigation is fully visible */
+    .nav-container {
+        padding: 0 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* Hide text, show only icons */
+    .nav-text {
+        display: none;
+    }
+    
+    .nav-link i {
+        font-size: 1.2em;
+    }
+}
+
+/* Heights constrained to 300-608px */
+@media screen and (max-height: 608px) and (max-width: 300px) {
+    /* Very specific case for extremely small screens */
+    .nav-logos img {
+        max-height: 20px; /* Reduce logo size */
+    }
+    
+    .nav-link i {
+        font-size: 1em; /* Smaller icons */
+    }
+    
+    .nav-container {
+        padding: 0 5px;
+    }
+    
+    .nav-items {
+        gap: 5px;
+    }
+}
+
+/* Height-constrained environments */
+@media screen and (max-height: 600px) {
+    #chart-container {
+        height: 150px;
+    }
+    
+    #institution-count {
+        padding: 10px;
+    }
+    
+    #institution-count-value {
+        font-size: 36px;
+    }
+    
+    #mobile-header {
+        height: 40px;
+        padding: 8px 15px;
+    }
+    
+    #stats-panel, #controls-panel {
+        padding-top: 15px;
+    }
+    
+    .control-box {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+}
+
+/* Extreme height constraints */
+@media screen and (max-height: 500px) {
+    #chart-container {
+        height: 120px;
+    }
+    
+    #institution-count {
+        padding: 8px;
+    }
+    
+    #institution-count-value {
+        font-size: 32px;
+    }
+    
+    #filter-controls {
+        margin-top: 8px;
+    }
+    
+    .filter-option label {
+        padding: 6px 8px;
+    }
+}
+
+/* High-resolution displays */
+@media screen and (min-resolution: 192dpi), 
+       screen and (-webkit-min-device-pixel-ratio: 2) {
+    .nav-logos img {
+        transform: scale(0.95);
+    }
+}
+
+/* Print styles */
+@media print {
+    #mobile-header, #stats-panel, #controls-panel, .panel-overlay, .panel-close-btn {
+        display: none !important;
+    }
+    
+    #app-container {
+        display: block;
+        margin: 0;
+        padding: 0;
+        height: auto;
+    }
+    
+    #map {
+        height: 100vh !important;
+        width: 100% !important;
+        page-break-inside: avoid;
+    }
+    
+    body {
+        background-color: white;
+    }
+    
+    .leaflet-control-container .leaflet-left,
+    .leaflet-control-container .leaflet-right {
+        display: none;
+    }
+    
+    .leaflet-control-attribution {
+        display: none !important;
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        font-size: 10px;
+    }
+}
+
+/* Z-index management */
+#main-nav {
+    z-index: 2000;
+}
+
+#mobile-header {
+    z-index: 1002;
+}
+
+#controls-panel.active, #stats-panel.active {
+    z-index: 1003;
+}
+
+.leaflet-top {
+    z-index: 900 !important;
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+    .filter-option input[type="checkbox"]:checked {
+        forced-color-adjust: none;
+    }
+    
+    #mobile-header button {
+        forced-color-adjust: none;
+    }
+    
+    .chart-bar {
+        forced-color-adjust: none;
+    }
+}
+
+/* Dark mode support - improved contrast */
+@media (prefers-color-scheme: dark) {
+    body {
+        color: #f0f4fa; /* Lighter text for better contrast */
+        background-color: #121620;
+    }
+    
+    #stats-panel, #controls-panel, .control-box {
+        background-color: #232a3a; /* Slightly lighter than before */
+        color: #f0f4fa;
+        border-color: #3d4559;
+    }
+    
+    .filter-option label {
+        background: #2d3748;
+        border-color: #4a5568;
+        color: #f0f4fa; /* Lighter text */
+    }
+    
+    .filter-option label:hover {
+        background: #4a5568;
+    }
+    
+    #search-input {
+        color: #f0f4fa; /* Lighter text */
+        background-color: #1c2333; /* Darker input background for contrast */
+    }
+    
+    #search-input::placeholder {
+        color: #a0aec0;
+    }
+    
+    .search-wrapper {
+        background-color: #2d3748;
+        border-color: #4a5568;
+    }
+    
+    .search-icon {
+        background-color: #4a5568;
+    }
+    
+    #institution-count {
+        background: linear-gradient(to right, #2d3748, #1a202c);
+    }
+    
+    #institution-count-value {
+        color:white; /* Lighter text */
+    }
+    
+
+    #filter-controls h3 {
+        color: white
+    }
+
+    #institution-count h2 {
+        color: #f0f4fa; /* Lighter text */
+    }
+
+    .service-legend {
+        background: #2d3748;
+        border-color: #4a5568;
+    }
+    
+    .service-legend-label {
+        color: #f0f4fa; /* Lighter text */
+    }
+    
+    #service-legend h4, #stats-panel h3 {
+        color: white;
+    }
+
+    /* Ensure buttons have good contrast */
+    button, .btn, .nav-link {
+        color: #f0f4fa; /* Lighter text */
+    }
+    
+    /* Improve readability of charts in dark mode */
+    .chart-bar {
+        border: 1px solid #4a5568;
+    }
+    
+    /* Ensure leaflet controls are visible in dark mode */
+    .leaflet-control {
+        background-color: #2d3748 !important;
+        color: #f0f4fa !important;
+        border-color: #4a5568 !important;
+    }
+}
+
+/* Focus states for keyboard navigation */
+button:focus-visible,
+input:focus-visible,
+.filter-option label:focus-within {
+    outline: 3px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Ensure chart responsiveness */
+#stats-chart {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Fix for responsive dimensions display in the toolbar */
+.dimensions-display {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.dimensions-display span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Add padding around the x to properly separate dimensions */
+.dimensions-separator {
+    padding: 0 4px;
+}

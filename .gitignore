@@ -1,0 +1,15 @@
+# Add unwated files and folders to .gitignore
+# Ignore documents
+docs/
+# Ignore old versions
+old/
+# Ignore sample images
+sample-images/
+
+# Ignore irrelevant data files 
+src/data/old/
+src/data/csv/
+
+# Ignore vs code 
+.vscode/
+

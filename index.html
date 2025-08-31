@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>GBV Service Providers - Southern Ghana</title>
+
+        <!-- Favicons  -->
+        <link rel="icon" href="src/images/logos/favicon.png" type="image/png">
+        <link rel="apple-touch-icon" href="src/images/logos/favicon.png" type="image/png">
+    
+        <!-- Leaflet CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    
+        <!-- Leaflet Awesome Markers -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    
+        <!-- Leaflet Search  -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-search@3.0.2/dist/leaflet-search.min.css" />
+    
+        <!-- Marker Cluster  -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
+    
+        <!-- Custom CSS  -->
+        <link rel="stylesheet" href="src/styles/index.css" />
+        <link rel="stylesheet" href="src/styles/media.css" />        
+    </head>
+
+    <body>
+        <!-- Nav bar -->
+        <nav id="main-nav"> 
+            <div class="nav-container">
+                <div class="nav-logos">
+                    <a href="https://waca.mesti.gov.gh/" target="_blank" rel="noopener noreferrer">
+                        <img src="src/images/logos/mest.png" alt="MEST Logo">
+                    </a>
+                    <a href="https://waca.mesti.gov.gh/" target="_blank" rel="noopener noreferrer">
+                        <img src="src/images/logos/waca.png" alt="WACA Logo">
+                    </a>
+                </div>
+                <div class="nav-items">
+                    <a href="https://waca.mesti.gov.gh/" class="nav-link" target="_blank"><i class="fas fa-home"></i> <span class="nav-text">Home</span></a>
+                    <a href="https://github.com/edudzikorku/GBV_Service_Providers.git" class="nav-link" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-github"></i> <span class="nav-text">GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- App Container -->
+        <div id="app-container">
+            <!-- Mobile header/toggle for controls -->
+            <div id="mobile-header">
+                <button id="toggle-stats">📊 Statistics</button>
+                <button id="toggle-controls">☰ Filters & Search</button>
+            </div>
+            
+            
+            <!-- Left panel for statistics -->
+            <div id="stats-panel">
+                <h3>Categories of Service Providers</h3>
+
+                <!-- Legend  -->
+                 <div id="service-legend" class="service-legend"></div>
+
+                 <!-- Chart (Bar chart / Pie chart)   -->
+                <div id="chart-container">
+                    <canvas id="stats-chart"></canvas>
+                </div>
+
+                <!-- Summary statistics of the total number of service providers mapped. -->
+                <div id="institution-count">
+                    <h2>Number of Service Providers Mapped</h2>
+                    <p id="institution-count-value">0</p>
+                </div>
+            </div>
+
+            <!-- Main map container -->
+            <div id="map"></div>
+
+            <!-- Controls panel -->
+            <div id="controls-panel">
+                <div id="controls">
+                    <div id="filter-controls" class="control-box">
+                        <h3>Filter Services</h3>
+                        <div class="filter-option">
+                            <input type="checkbox" id="filter-health" checked>
+                            <label for="filter-health">Health</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="filter-education">
+                            <label for="filter-education">Education</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="filter-legal">
+                            <label for="filter-legal">Legal & Human Rights</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="filter-law-enforcement">
+                            <label for="filter-law-enforcement">Law Enforcement & Protection</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="filter-government-and-municipal">
+                            <label for="filter-government-and-municipal">Government & Municipal Administration</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="filter-social-welfare">
+                            <label for="filter-social-welfare">Social Welfare & Community Development</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="filter-child-and-youth-support-ngos">
+                            <label for="filter-child-and-youth-support-ngos">Child & Youth Support NGOs</label>
+                        </div>
+                    </div>
+    
+                    <div id="search-container" class="control-box">
+                        <div class="search-wrapper">
+                            <div class="search-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                            <input type="text" id="search-input" placeholder="Search for a service provider...">
+                        </div>
+                        <div id="search-results">
+                            <!-- Dynamically populated search results will go here -->
+                        </div>
+                    </div>
+
+                    <div id="directions-control" class="control-box" style="display:none;">
+                        <h3>Directions</h3>
+                        <div id="route-instructions"></div>
+                        <button id="clear-route">Clear Route</button>
+                    </div>
+    
+                    <div id="loading-indicator" class="control-box">
+                        <p>Loading Data...</p>
+                    </div>
+                </div>
+            </div>
+        </div>    
+
+        <!-- Leaflet JS -->
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+        <!-- Leaflet Plugins  -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+        <script src="https://unpkg.com/leaflet-search@3.0.2/dist/leaflet-search.min.js"></script>
+        <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
+        <!-- Configuration  -->
+        <script src="src/scripts/config.js"></script>
+
+        <!-- Map Functionality -->
+        <script src="src/scripts/map.js"></script>
+
+        <!-- Main Application  -->
+        <script src="src/scripts/main.js"></script>
+    </body>
+</html>

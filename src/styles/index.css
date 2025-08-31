@@ -1,0 +1,696 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Open+Sans:wght@400;600&display=swap');
+
+/* Global Variables */
+/* :root {
+    --logo-gap: 25px;
+    --control-z-index: 900;
+    --panel-z-index: 1001;
+    --header-z-index: 1002;
+  } */
+  
+  /* Use rem units for better scalability */
+  html {
+    font-size: 16px;
+  }
+
+/* Base Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Poppins', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #f8fafc;
+}
+
+body, #app-container {
+    overflow-x: hidden;
+}
+/* Adjust app container to account for fixed nav */
+#app-container {
+    margin-top: 60px;
+    height: calc(100vh - 60px);
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: #1e293b;
+    margin-top: 0;
+}
+
+/* Accessibility classes */
+.visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+:focus-visible {
+    outline: 3px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+
+/* Map Container */
+#map {
+    flex: 1;
+    width: 100%;
+    order: 2; /* Map comes after header on mobile */
+    z-index: 1;
+}
+
+/* Mobile Header */
+#mobile-header {
+    display: none;
+    padding: 12px 15px;
+    background: linear-gradient(to right, #3498db, #2980b9);
+    color: white;
+    order: 1;
+    z-index: 1002;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+#mobile-header button {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+#mobile-header button:active {
+    background: rgba(255,255,255,0.25);
+}
+
+/* Stats Panel */
+#stats-panel {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 280px;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 1000;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Controls Panel */
+#controls-panel {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 320px;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 1000;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Add smooth transitions */
+#stats-panel, #controls-panel {
+    will-change: transform;
+    transform: translateX(0);
+}
+
+/* Panel active states */
+#stats-panel.active {
+    transform: translateX(0);
+}
+
+#controls-panel.active {
+    transform: translateX(0);
+}
+
+/* Ensure scrollable content has padding at bottom */
+.panel-content {
+    padding-bottom: 20px;
+}
+
+
+
+/* Custom scrollbar for panels */
+#stats-panel::-webkit-scrollbar, #controls-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+#stats-panel::-webkit-scrollbar-track, #controls-panel::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+#stats-panel::-webkit-scrollbar-thumb, #controls-panel::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+/* Panel close buttons for mobile */
+.panel-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    background: #f1f5f9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    display: none; 
+    color: #4a5568;
+    z-index: 10;
+}
+
+/* Panel close buttons - hide by default on desktop */
+.panel-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    background: #f1f5f9;
+    border-radius: 50%;
+    display: none; /* Hide by default for desktop */
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    color: #4a5568;
+    z-index: 10;
+}
+
+
+#stats-panel .panel-close {
+    right: 15px;
+}
+
+/* Control Box Styles */
+.control-box {
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    margin-bottom: 16px;
+    border: 1px solid #e2e8f0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.control-box h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #334155;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Search Container */
+#search-container {
+    width: 30hw;
+    margin-top: 15px;
+    position: relative;
+}
+
+.search-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.search-wrapper:focus-within {
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    border-color: #3b82f6;
+}
+
+.search-icon {
+    padding: 10px 12px;
+    background-color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #e2e8f0;
+}
+
+.search-icon svg {
+    width: 18px;
+    height: 18px;
+    color: #64748b;
+}
+
+#search-input {
+    width: 95%;
+    padding: 12px;
+    border: none;
+    background-color: transparent;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    color: #334155;
+    outline: none;
+}
+
+.search-result {
+    font-size: 0.8rem;
+}
+
+#search-input::placeholder {
+    color: #94a3b8;
+}
+
+/* Filter Controls */
+#filter-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.filter-option {
+    margin: 0;
+}
+
+.filter-option label {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.3;
+}
+
+.filter-option label:hover {
+    background: #edf2f7;
+    border-color: #cbd5e1;
+}
+
+/* Custom checkbox styling */
+.filter-option input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #cbd5e1;
+    border-radius: 4px;
+    margin-right: 10px;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.filter-option input[type="checkbox"]:checked {
+    background: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.filter-option input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.filter-option input[type="checkbox"]:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 1px;
+}
+
+/* Chart Container */
+#chart-container {
+    flex: 1;
+    min-height: 350px;
+    position: relative;
+    margin-bottom: 25px;
+    left: 10px;
+}
+
+/* Chart styling improvements */
+.chart-bar {
+    fill: #3498db;
+    transition: fill 0.2s ease;
+}
+
+.chart-bar:hover {
+    fill: #2980b9;
+}
+
+.chart-axis text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.chart-axis line, .chart-axis path {
+    stroke: #e2e8f0;
+}
+
+.chart-grid line {
+    stroke: #f1f5f9;
+}
+
+/* Institution Count Box */
+#institution-count {
+    flex-shrink: 0;
+    margin-top: auto;
+    background: linear-gradient(to right, #f8f9fa, #edf2f7);
+    border-radius: 10px;
+    padding: 20px 15px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+#institution-count h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #4a5568;
+    margin-bottom: 5px;
+    text-align: left !important;
+}
+
+#institution-count-value {
+    font-size: 60px;
+    font-weight: 700;
+    color: #2d3748;
+    line-height: 1.1;
+}
+
+/* Panel overlay for mobile */
+.panel-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.panel-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Constrain images in popups */
+.provider-popup img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 5px 0;
+}
+
+/* Style for fallback images */
+.fallback-image {
+    background: #f0f0f0;
+    padding: 10px;
+    text-align: center;
+    margin: 5px 0;
+}
+
+/* Constrain the directions panel */
+#directions-control {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Hide any routing container Leaflet might try to create */
+.leaflet-routing-container, .no-routing-container {
+    display: none !important;
+}
+
+/* Style for route instructions */
+.route-step {
+    padding: 5px;
+    border-bottom: 1px solid #eee;
+    text-decoration: none;
+    border-bottom: none;
+    line-height: 1.2; /* Adjust line spacing */
+    font-size: 0.85rem;
+
+}
+
+/* Route Control Buttons */
+#clear-route,
+.get-directions {
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(52, 152, 219, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+}
+
+#clear-route {
+    background: #e74c3c;
+}
+
+#clear-route:hover {
+    background: #c0392b;
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+}
+
+.get-directions {
+    background: #2ecc71;
+}
+
+.get-directions:hover {
+    background: #27ae60;
+    box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+}
+
+/* Button icons  */
+#clear-route::before,
+.get-directions::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#clear-route::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 6L6 18M6 6l12 12'/%3E%3C/svg%3E");
+}
+
+.get-directions::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18l6-6-6-6'/%3E%3C/svg%3E");
+}
+
+/* Active state */
+#clear-route:active,
+.get-directions:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Disabled state */
+#clear-route:disabled,
+.get-directions:disabled {
+    background: #cbd5e0;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Focus state for accessibility */
+#clear-route:focus-visible,
+.get-directions:focus-visible {
+    outline: 3px solid #63b3ed;
+    outline-offset: 2px;
+}
+
+/* Button group layout (if buttons are next to each other) */
+.route-controls {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+/* Alternative style - Outline buttons */
+.outline-style #clear-route {
+    background: transparent;
+    border: 2px solid #e74c3c;
+    color: #e74c3c;
+}
+
+.outline-style .get-directions {
+    background: transparent;
+    border: 2px solid #2ecc71;
+    /* color: #2ecc71; */
+    color: #007B90;
+}
+
+.outline-style #clear-route:hover {
+    background: rgba(231, 76, 60, 0.1);
+}
+
+.outline-style .get-directions:hover {
+    background: rgba(46, 204, 113, 0.1);
+}
+
+
+/* Legend  */
+.service-legend {
+    margin: 15px 0;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+.service-legend h4 {
+    margin-top: 0;
+    font-size: 15px;
+    color: #495057;
+    /* text-align: center; */
+}
+
+.service-legend-item {
+    display: flex;
+    align-items: center;
+    margin: 6px 0;
+}
+
+.service-legend-icon {
+    width: 18px;
+    margin-right: 8px;
+    text-align: center;
+}
+
+.service-legend-label {
+    font-size: 13px;
+    color: #343a40;
+}
+
+.legend-date {
+    font-size: 11px;
+    color: #6c757d;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+/* Navigation Bar Styles */
+#main-nav {
+    background-color:#01411C; /* Green color */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2000;
+    height: 60px;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px; 
+    height: 100%;
+}
+
+.nav-logos {
+    margin-left: -150px; 
+    display: flex;
+    gap: 30px; 
+}
+
+.nav-logos a {
+    display: block;
+    height: 100%;
+    padding: 10px 0; 
+}
+
+.nav-logos img {
+    height: 40px;
+    transition: transform 0.2s;
+}
+
+.nav-logos img:hover {
+    transform: scale(1.05); 
+}
+
+.nav-items {
+    display: flex;
+    gap: 30px; 
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.nav-link:hover {
+    background-color: rgba(255,255,255,0.1); 
+}
+
+.nav-link i {
+    font-size: 1.1em;
+}
+
